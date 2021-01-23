@@ -1,7 +1,7 @@
-let a = 0
-let b = 0
-let c = 0
-let d = 0
+let a = 1
+let b = 2
+let c = 3
+let d = 4
 
 function set(e,f,g,h){
     a=e;
