@@ -5,7 +5,8 @@ var breaker = require('../breaker');
 // GET
 router.get('/index', function(req, res, next) {
     res.json({
-      response: '200 OK'
+      "/setup": 'setup game',
+      "/play/number": 'play'
     });
 });
 
