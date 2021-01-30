@@ -1,7 +1,29 @@
 const app = require("./app");
+var http = require('http');
 
-const port = 3000;
+//Get port from environment and store in Express.
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
 
-app.listen(port, () => {
+// Create HTTP server.
+var server = http.createServer(app);
+
+server.listen(port, () => {
     console.log("The app is now running on port", port);
 });
+
+function normalizePort(val) {
+    var port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
+
+    if (port >= 0) {
+        // port number
+        return port;
+    }
+
+    return false;
+}
