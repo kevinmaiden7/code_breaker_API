@@ -1,39 +1,39 @@
-var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-
 var app = express();
+var breaker = require('./breaker');
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+// GET
+app.get('/index', function(req, res, next) {
+    res.json({
+      "/setup/number": 'set up game',
+      "/play/number": 'play'
+    });
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// GET
+app.get('/play/:number', function(req, res, next) {
+  n = [];
+  numbers = req.params.number;
+  for (var i = 0, len = numbers.length; i < len; i += 1) {
+    n.push(+numbers.charAt(i));
+  }
+  result = breaker.evaluate(n[0], n[1], n[2], n[3]);
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.json({
+    result
+  });
+});
+
+// GET
+app.get('/setup/:number', function (req, res, next) {
+  n = [];
+  numbers = req.params.number;
+  for (var i = 0, len = numbers.length; i < len; i += 1) {
+    n.push(+numbers.charAt(i));
+  }
+  breaker.set(n[0], n[1], n[2], n[3]);
+
+  res.send("Game configured");
 });
 
 module.exports = app;

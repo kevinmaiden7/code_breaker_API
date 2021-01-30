@@ -3,11 +3,8 @@ let b = 2
 let c = 3
 let d = 4
 
-function set(e,f,g,h){
-    a=e;
-    b=f;
-    c=g;
-    d=h;
+function set(n1,n2,n3,n4){
+    a = n1; b = n2; c = n3; d = n4;
 }
 
 function evaluate(n1,n2,n3,n4) {
@@ -31,8 +28,7 @@ function evaluate(n1,n2,n3,n4) {
     }
     else{
         return "";
-    }
-    
+    }  
 }
 
 module.exports = {set, evaluate};
